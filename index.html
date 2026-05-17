@@ -2,201 +2,412 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>PN TECH SUPPORT AUTOMATION</title>
+  <title>MK SMART HOME</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f9f9f9;
-      margin: 0;
-      padding: 0 10px 40px;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      justify-content: space-between;
-    }
-    h1 {
-      margin-top: 30px;
-      font-size: 1.8rem;
-    }
-    .relay-card {
-      display: inline-block;
-      background-color: white;
-      padding: 20px;
-      margin: 15px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 220px;
-      vertical-align: top;
-    }
-    .relay-card h2 {
-      margin-bottom: 10px;
-      font-size: 1.3rem;
-    }
-    .relay-card p {
-      margin-bottom: 10px;
-      font-size: 1rem;
-    }
-    .relay-card button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      background-color: blue;
-      cursor: pointer;
-      font-size: 16px;
-      width: 90%;
-      transition: opacity 0.3s ease;
-    }
-    .relay-card button:hover {
-      opacity: 0.8;
-    }
-    #allOffBtn, #logoutBtn {
-      max-width: 300px;
-      width: 90%;
-      padding: 12px 25px;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin: 15px auto;
-      display: block;
-      color: white;
-      transition: opacity 0.3s ease;
-    }
-    #allOffBtn {
-      background-color: #d32f2f;
-    }
-    #allOffBtn:hover {
-      opacity: 0.8;
-    }
-    #logoutBtn {
-      background-color: #555;
-    }
-    #logoutBtn:hover {
-      opacity: 0.8;
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
     }
 
-    #dashboard {
-      display: none;
+    body{
+      min-height:100vh;
+      background: linear-gradient(-45deg,#0f172a,#111827,#1e293b,#020617);
+      background-size:400% 400%;
+      animation:bgMove 15s ease infinite;
+      color:white;
+      overflow-x:hidden;
+      padding:20px;
     }
-    #loginForm {
-      max-width: 400px;
-      margin: 80px auto 20px;
-      background: white;
-      padding: 30px 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+    @keyframes bgMove{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
     }
-    #loginForm input {
-      width: 100%;
-      padding: 12px 15px;
-      margin: 10px 0 20px;
-      font-size: 1rem;
-      border: 1.5px solid #ccc;
-      border-radius: 10px;
-      box-sizing: border-box;
-      outline-offset: 2px;
-      transition: border-color 0.3s ease;
+
+    .blur-circle{
+      position:fixed;
+      width:300px;
+      height:300px;
+      border-radius:50%;
+      filter:blur(100px);
+      z-index:-1;
+      opacity:0.5;
     }
-    #loginForm input:focus {
-      border-color: #1e88e5;
+
+    .circle1{
+      background:#00d4ff;
+      top:-100px;
+      left:-100px;
     }
-    #loginForm button {
-      width: 100%;
-      background-color: #1e88e5;
-      color: white;
-      padding: 12px;
-      font-size: 18px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+
+    .circle2{
+      background:#7c3aed;
+      bottom:-100px;
+      right:-100px;
     }
-    #loginForm button:hover {
-      background-color: #1565c0;
+
+    h1{
+      text-align:center;
+      font-size:2.5rem;
+      font-weight:700;
+      margin-top:20px;
+      margin-bottom:10px;
+      letter-spacing:1px;
     }
-    #dashboard .relay-container {
-      max-width: 960px;
-      margin: 20px auto 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+
+    .subtitle{
+      text-align:center;
+      color:#cbd5e1;
+      margin-bottom:35px;
+      font-size:1rem;
     }
-    @media (max-width: 700px) {
-      .relay-card {
-        width: 90%;
-        margin: 10px auto;
-        display: block;
+
+    /* LOGIN */
+
+    #loginForm{
+      width:100%;
+      max-width:420px;
+      margin:60px auto;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.1);
+      backdrop-filter:blur(18px);
+      border-radius:28px;
+      padding:35px 30px;
+      box-shadow:0 8px 32px rgba(0,0,0,0.35);
+    }
+
+    .login-title{
+      text-align:center;
+      font-size:1.8rem;
+      margin-bottom:25px;
+      font-weight:600;
+    }
+
+    .input-group{
+      margin-bottom:20px;
+    }
+
+    .input-group label{
+      display:block;
+      margin-bottom:8px;
+      color:#cbd5e1;
+      font-size:14px;
+    }
+
+    #loginForm input{
+      width:100%;
+      padding:14px 16px;
+      border:none;
+      border-radius:14px;
+      background:rgba(255,255,255,0.1);
+      color:white;
+      outline:none;
+      font-size:15px;
+      transition:0.3s;
+      border:1px solid transparent;
+    }
+
+    #loginForm input:focus{
+      border-color:#38bdf8;
+      box-shadow:0 0 15px rgba(56,189,248,0.4);
+    }
+
+    #loginForm input::placeholder{
+      color:#94a3b8;
+    }
+
+    #loginBtn{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:14px;
+      background:linear-gradient(135deg,#0ea5e9,#2563eb);
+      color:white;
+      font-size:16px;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.3s;
+      margin-top:10px;
+    }
+
+    #loginBtn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 20px rgba(37,99,235,0.35);
+    }
+
+    /* DASHBOARD */
+
+    #dashboard{
+      display:none;
+    }
+
+    .topbar{
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:15px;
+      margin-bottom:30px;
+    }
+
+    .welcome-box{
+      background:rgba(255,255,255,0.08);
+      padding:16px 22px;
+      border-radius:18px;
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .relay-container{
+      max-width:1200px;
+      margin:auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+    }
+
+    .relay-card{
+      position:relative;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:28px;
+      padding:30px 20px;
+      text-align:center;
+      backdrop-filter:blur(18px);
+      overflow:hidden;
+      transition:0.35s;
+      box-shadow:0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .relay-card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .relay-icon{
+      width:80px;
+      height:80px;
+      margin:auto;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,0.08);
+      font-size:35px;
+      margin-bottom:20px;
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    .relay-card h2{
+      font-size:1.5rem;
+      margin-bottom:15px;
+      font-weight:600;
+    }
+
+    .status-box{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+      margin-bottom:22px;
+      font-size:1rem;
+      color:#e2e8f0;
+    }
+
+    .status-dot{
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      background:red;
+      box-shadow:0 0 12px red;
+      animation:pulse 1.2s infinite;
+    }
+
+    @keyframes pulse{
+      0%{transform:scale(1);opacity:1;}
+      50%{transform:scale(1.4);opacity:0.6;}
+      100%{transform:scale(1);opacity:1;}
+    }
+
+    .relay-btn{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:16px;
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+      color:white;
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);
+      transition:0.3s;
+    }
+
+    .relay-btn:hover{
+      transform:scale(1.03);
+    }
+
+    .action-buttons{
+      max-width:1200px;
+      margin:35px auto 10px;
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .action-buttons button{
+      padding:14px 28px;
+      border:none;
+      border-radius:16px;
+      cursor:pointer;
+      font-size:15px;
+      font-weight:600;
+      color:white;
+      transition:0.3s;
+    }
+
+    #allOffBtn{
+      background:linear-gradient(135deg,#ef4444,#dc2626);
+    }
+
+    #logoutBtn{
+      background:linear-gradient(135deg,#475569,#334155);
+    }
+
+    .action-buttons button:hover{
+      transform:translateY(-3px);
+    }
+
+    footer{
+      margin-top:50px;
+      text-align:center;
+      color:#94a3b8;
+      font-size:14px;
+      padding-bottom:20px;
+    }
+
+    @media(max-width:768px){
+
+      h1{
+        font-size:2rem;
       }
-      body {
-        padding: 0 10px 60px;
+
+      .topbar{
+        justify-content:center;
+        text-align:center;
       }
+
+      .relay-card{
+        padding:25px 18px;
+      }
+
     }
-    footer {
-      font-size: 0.9rem;
-      color: #666;
-      padding: 10px 0;
-      margin-top: 40px;
-    }
+
   </style>
 </head>
 <body>
 
-  <h1>MK HOME AUTOMATION</h1>
+<div class="blur-circle circle1"></div>
+<div class="blur-circle circle2"></div>
 
-  <!-- Login form -->
-  <div id="loginForm">
-    <input type="email" id="email" placeholder="Enter Email" required />
-    <input type="password" id="password" placeholder="Enter Password" required />
-    <button id="loginBtn">Login</button>
+<h1>🏠 MK SMART HOME</h1>
+<p class="subtitle">Next Generation IoT Automation Dashboard</p>
+
+<!-- LOGIN -->
+<div id="loginForm">
+
+  <div class="login-title">🔐 Secure Login</div>
+
+  <div class="input-group">
+    <label>Email Address</label>
+    <input type="email" id="email" placeholder="Enter Email">
   </div>
 
-  <!-- Dashboard -->
-  <div id="dashboard">
-    <div class="relay-container">
-      <div class="relay-card">
-        <h2>Relay 1</h2>
-        <p>Status: <span id="status1">Loading...</span></p>
-        <button id="btn1">Toggle</button>
-      </div>
+  <div class="input-group">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter Password">
+  </div>
 
-      <div class="relay-card">
-        <h2>Relay 2</h2>
-        <p>Status: <span id="status2">Loading...</span></p>
-        <button id="btn2">Toggle</button>
-      </div>
+  <button id="loginBtn">Login Dashboard</button>
 
-      <div class="relay-card">
-        <h2>Relay 3</h2>
-        <p>Status: <span id="status3">Loading...</span></p>
-        <button id="btn3">Toggle</button>
-      </div>
+</div>
 
-      <div class="relay-card">
-        <h2>Relay 4</h2>
-        <p>Status: <span id="status4">Loading...</span></p>
-        <button id="btn4">Toggle</button>
-      </div>
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+  <div class="topbar">
+
+    <div class="welcome-box">
+      <h3>⚡ Smart Control Center</h3>
+      <p style="color:#cbd5e1;font-size:14px; margin-top:4px;">
+        Control your devices in real-time
+      </p>
     </div>
 
-    <button id="allOffBtn">All OFF</button>
-    <button id="logoutBtn">Logout</button>
   </div>
 
-  <footer>
-    Created by PN TECH SUPPORT
-  </footer>
+  <div class="relay-container">
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <div class="relay-card">
+      <div class="relay-icon">💡</div>
+      <h2>Relay 1</h2>
 
-  <script>
-    // Firebase config
-    const firebaseConfig = {
+      <div class="status-box">
+        <div class="status-dot" id="dot1"></div>
+        <span id="status1">Loading...</span>
+      </div>
+
+      <button class="relay-btn" id="btn1">Toggle Device</button>
+    </div>
+
+
+    <div class="relay-card">
+      <div class="relay-icon">🌀</div>
+      <h2>Relay 2</h2>
+
+      <div class="status-box">
+        <div class="status-dot" id="dot2"></div>
+        <span id="status2">Loading...</span>
+      </div>
+
+      <button class="relay-btn" id="btn2">Toggle Device</button>
+    </div>
+
+  </div>
+
+
+  <div class="action-buttons">
+    <button id="allOffBtn">⚠ Turn OFF All</button>
+    <button id="logoutBtn">🚪 Logout</button>
+  </div>
+
+</div>
+
+<footer>
+  Designed & Developed by PN TECH SUPPORT 🚀
+</footer>
+
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+
+<script>
+
+const firebaseConfig = {
   apiKey: "AIzaSyCODACv3hkVd78cr37rzi_py6sYb6ay7g8",
   authDomain: "nodemcu-relay-01-a1dab.firebaseapp.com",
   databaseURL: "https://nodemcu-relay-01-a1dab-default-rtdb.firebaseio.com",
@@ -206,80 +417,127 @@
   appId: "1:1041965645126:web:f7971de6bdae3acc4db947"
 };
 
-    firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
-    const loginForm = document.getElementById("loginForm");
-    const dashboard = document.getElementById("dashboard");
-    const loginBtn = document.getElementById("loginBtn");
+const loginForm = document.getElementById("loginForm");
+const dashboard = document.getElementById("dashboard");
+const loginBtn = document.getElementById("loginBtn");
 
-    loginBtn.addEventListener("click", () => {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+loginBtn.addEventListener("click", () => {
 
-      if (!email || !password) {
-        alert("Please enter email and password.");
-        return;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    alert("Please enter email and password");
+    return;
+  }
+
+  loginBtn.innerHTML = "Connecting...";
+
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+
+    loginForm.style.display = "none";
+    dashboard.style.display = "block";
+
+    startRelayControl();
+
+  })
+  .catch((error) => {
+    alert("Login Failed : " + error.message);
+    loginBtn.innerHTML = "Login Dashboard";
+  });
+
+});
+
+
+function startRelayControl(){
+
+  const db = firebase.database();
+
+  const relays = [
+    {id:1,path:"relay1"},
+    {id:2,path:"relay2"},
+  ];
+
+  relays.forEach(relay => {
+
+    const statusText = document.getElementById(`status${relay.id}`);
+    const toggleButton = document.getElementById(`btn${relay.id}`);
+    const dot = document.getElementById(`dot${relay.id}`);
+
+    const relayRef = db.ref("/" + relay.path);
+
+    relayRef.on("value", (snapshot) => {
+
+      const state = snapshot.val();
+
+      statusText.innerText = state ? "ONLINE / ON" : "OFFLINE / OFF";
+
+      if(state){
+
+        toggleButton.style.background = "linear-gradient(135deg,#10b981,#059669)";
+        dot.style.background = "#22c55e";
+        dot.style.boxShadow = "0 0 15px #22c55e";
+
+      }
+      else{
+
+        toggleButton.style.background = "linear-gradient(135deg,#2563eb,#1d4ed8)";
+        dot.style.background = "#ef4444";
+        dot.style.boxShadow = "0 0 15px #ef4444";
+
       }
 
-      firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(userCredential => {
-          console.log("Signed in as", userCredential.user.email);
-          loginForm.style.display = "none";
-          dashboard.style.display = "block";
-          startRelayControl();
-        })
-        .catch(error => {
-          alert("Login failed: " + error.message);
-        });
     });
 
-    function startRelayControl() {
-      const db = firebase.database();
 
-      const relays = [
-        { id: 1, path: "relay1" },
-        { id: 2, path: "relay2" },
-        { id: 3, path: "relay3" },
-        { id: 4, path: "relay4" },
-      ];
+    toggleButton.onclick = () => {
 
-      relays.forEach(relay => {
-        const statusText = document.getElementById(`status${relay.id}`);
-        const toggleButton = document.getElementById(`btn${relay.id}`);
-        const relayRef = db.ref("/" + relay.path);
-
-        relayRef.on("value", (snapshot) => {
-          const state = snapshot.val();
-          statusText.innerText = state ? "ON" : "OFF";
-          toggleButton.style.backgroundColor = state ? "green" : "blue";
-        });
-
-        toggleButton.onclick = () => {
-          relayRef.get().then(snap => {
-            relayRef.set(!snap.val());
-          });
-        };
+      relayRef.get().then(snap => {
+        relayRef.set(!snap.val());
       });
 
-      document.getElementById("allOffBtn").onclick = () => {
-        relays.forEach(relay => {
-          db.ref("/" + relay.path).set(false);
-        });
-      };
-    }
-
-    document.getElementById("logoutBtn").onclick = () => {
-      firebase.auth().signOut()
-        .then(() => {
-          dashboard.style.display = "none";
-          loginForm.style.display = "block";
-          document.getElementById("email").value = "";
-          document.getElementById("password").value = "";
-        })
-        .catch(error => {
-          alert("Logout failed: " + error.message);
-        });
     };
-  </script>
+
+  });
+
+
+  document.getElementById("allOffBtn").onclick = () => {
+
+    relays.forEach(relay => {
+      db.ref("/" + relay.path).set(false);
+    });
+
+  };
+
+}
+
+
+// LOGOUT
+
+document.getElementById("logoutBtn").onclick = () => {
+
+  firebase.auth().signOut()
+  .then(() => {
+
+    dashboard.style.display = "none";
+    loginForm.style.display = "block";
+
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+
+    loginBtn.innerHTML = "Login Dashboard";
+
+  })
+  .catch((error) => {
+    alert("Logout Failed : " + error.message);
+  });
+
+};
+
+</script>
+
 </body>
 </html>
